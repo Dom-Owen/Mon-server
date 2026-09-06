@@ -1,106 +1,93 @@
 # Journal de bord du projet
 
-Ce fichier est écrit pour toi, pas pour un développeur. Il raconte en français simple
-ce qui a été fait, ce qui a été décidé, et ce qui reste à faire. Il est mis à jour
-à la fin de chaque lot.
+Écrit pour toi, pas pour un développeur. Ce fichier raconte en français simple ce qui a été
+fait, ce qui a été décidé et pourquoi. Mis à jour à la fin de chaque étape.
 
 ---
 
-## 30 août 2026 — Étude préalable
+## 6 septembre 2026 — Refonte complète après ton nouveau brief
 
-### Ce que j'ai fait
-Aucune ligne de code, volontairement. Ton prompt d'amorçage demandait un plan et une
-validation avant d'écrire quoi que ce soit. J'ai donc produit trois documents :
+### Ce qui a changé
+Ton nouveau brief est nettement plus complet que le précédent et modifie des choses de
+fond. J'ai donc repris tous les documents à zéro plutôt que de les rapiécer.
 
-- `docs/modele-donnees.md` — la liste complète de ce que l'application va mémoriser
-  (les « tables »), en français, sans langage technique de base de données.
-- `docs/plan-lots.md` — le découpage du développement en étapes testables une par une.
-- ce journal.
+Les changements qui ont le plus d'effet sur la construction :
 
-Le dépôt était vide au départ (un simple fichier README).
+| Avant | Maintenant |
+|---|---|
+| Un seul espace, pour le bailleur | Deux espaces : bailleur **et** locataire |
+| Connexion par email | **Connexion par numéro de téléphone** |
+| Trois rôles | Quatre : bailleur, mandataire, locataire, admin |
+| Un utilisateur = un rôle | Un utilisateur peut être bailleur **et** locataire |
+| Abonnement par unité envisagé | **Application entièrement gratuite**, rien de facturé |
+| Deux ou trois documents | **Quatorze documents** à générer |
+| Charges en forfait | **Cinq modes de charges**, dont les relevés de compteurs |
+| Pas de signature | **Signature électronique avec dossier de preuve** |
 
-### Ce que j'ai relevé dans ta proposition de modèle
-Ton modèle était solide. J'y ai apporté neuf corrections ou ajouts, détaillés en bas
-de `docs/modele-donnees.md`. Les trois qui comptent vraiment :
+J'ai supprimé du plan tout ce qui touchait à un abonnement ou à un comptage d'unités
+facturables. Tu as été explicite : rien de tel, même en préparation.
 
-1. **Un paiement ne doit pas être rattaché à une échéance.** Tu écris toi-même qu'un
-   paiement peut couvrir six mois et qu'une échéance peut recevoir plusieurs paiements.
-   Ces deux phrases sont incompatibles avec un simple champ « échéance concernée ».
-   Il faut une table intermédiaire qui dit « telle partie de tel paiement paie telle
-   échéance ». C'est la correction la plus structurante du projet.
+### Ce que j'ai vérifié avant de te répondre
+Un point technique décisif, que je ne voulais pas te donner de mémoire.
 
-2. **Il manque une protection contre les doublons de paiement.** Tu veux saisir hors
-   réseau. Quand le téléphone réessaie d'envoyer une saisie après une coupure, rien
-   n'empêche aujourd'hui le serveur de l'enregistrer deux fois. Sur un outil qui suit
-   de l'argent liquide, c'est le pire défaut possible. Solution : chaque saisie porte
-   un identifiant unique fabriqué par le téléphone.
+**Supabase exige qu'un service d'envoi de SMS soit configuré pour activer la connexion par
+téléphone**, même en désactivant la vérification par code. Ta règle « téléphone + mot de
+passe, sans SMS » ne peut donc pas être appliquée directement avec l'outil choisi.
 
-3. **Il manque un solde de départ sur les baux.** Tes utilisateurs ont déjà des
-   locataires, et souvent déjà des arriérés, le jour où ils installent l'application.
-   Sans ce champ, l'écran « Impayés » affiche zéro le premier jour et l'outil perd
-   toute crédibilité immédiatement.
+La solution retenue est expliquée en détail dans `docs/authentification.md` : l'utilisateur
+saisit son numéro et rien d'autre, l'application le transforme en identifiant interne
+invisible. Coût : zéro. Et le jour où tu voudras ajouter un code par SMS ou par WhatsApp,
+il n'y aura rien à réécrire.
 
-### Ce que j'ai changé dans ton découpage en lots
-Quatre déplacements, expliqués dans `docs/plan-lots.md`. Le plus important : **la
-machinerie du hors ligne remonte avant les états des lieux**, parce que tu demandes
-que les états des lieux fonctionnent hors réseau (lot 5) alors que le hors ligne
-n'était prévu qu'au lot 8. En l'état, il aurait fallu écrire cet écran deux fois.
+J'ai aussi vérifié les tarifs d'hébergement réels plutôt que de te donner des ordres de
+grandeur approximatifs. Ils sont dans `docs/couts.md`, avec le calcul du poids des photos
+d'états des lieux, qui est de loin le premier poste de dépense.
 
-### Ce qui n'est pas décidé
-La pile technique que tu imposes (Next.js, Supabase, Vercel, next-intl, PWA) est un
-bon choix pour un débutant : très documentée, peu de choses à installer, tout se pilote
-depuis un navigateur. **Je ne propose pas d'en changer.** J'ajouterai simplement trois
-petits outils au moment voulu, et je t'expliquerai chacun :
-- de quoi fabriquer les PDF sans installer de navigateur sur le serveur,
-- de quoi stocker la file d'attente hors ligne dans le téléphone,
-- de quoi vérifier les formulaires avant envoi.
+### Ce que j'ai produit
+Toujours **aucune ligne de code**, comme tu l'as demandé.
+
+- `README.md` — le point d'entrée du projet, en français
+- `docs/plan-etapes.md` — dix-huit étapes, avec ce que tu verras marcher à la fin de chacune
+- `docs/modele-donnees.md` — tout ce que l'application mémorise, refondu
+- `docs/authentification.md` — la connexion par téléphone et le mot de passe oublié
+- `docs/couts.md` — les coûts réels, sources à l'appui
+- `docs/points-juridiques-a-valider.md` — les questions transversales pour ton juriste
+- `contenu-juridique/` — quatorze fichiers vides, un par document, à remplir avec les
+  textes validés. **Aucun texte de loi inventé, aucun numéro d'article cité.**
+
+### Les cinq changements que je propose dans ton découpage
+Détaillés en bas de `docs/plan-etapes.md`. En résumé :
+
+1. L'espace locataire **après** l'espace bailleur. Aucun locataire n'utilisera
+   l'application si son bailleur ne s'en sert pas déjà.
+2. Les quatorze documents en deux fois : les trois du quotidien tôt, les onze autres après.
+3. La signature électronique après les documents, pas avec.
+4. Le pré-remplissage automatique d'un bail scanné : hors version 1. Le téléversement du
+   bail papier, lui, reste bien dans le parcours de démarrage.
+5. Le mandataire : la structure de données dès le début, l'écran plus tard.
 
 ### En attente de ta réponse
-Huit questions, posées dans la conversation. Rien ne démarre avant tes réponses.
-Tu peux répondre « je prends tes valeurs par défaut » pour toutes, ou ne trancher que
-celles qui te parlent.
+Sept questions, posées dans la conversation. Chacune a une recommandation, tu peux
+répondre « d'accord pour tes valeurs par défaut ».
 
 ### Prochaine étape
-Lot 0 — socle technique, dès que tu valides.
+Étape 0 — choix du nom et création des comptes, dès que tu valides.
 
 ---
 
-## Les huit questions en attente
+## 30 août 2026 — Première étude *(largement remplacée)*
 
-Pour chacune, ma recommandation est indiquée. Tu peux te contenter de dire
-« d'accord » pour prendre toutes les recommandations.
+Première analyse, sur la base du brief précédent. Le modèle de données et le découpage
+produits ce jour-là ont été refondus le 6 septembre. Trois constats de cette première
+étude restent valables et ont été repris tels quels :
 
-1. **Comment se connecte-t-on ?** Email + mot de passe (gratuit), ou téléphone + code
-   par SMS (chaque SMS est payant et peu fiable au Cameroun) ?
-   → *Recommandation : email + mot de passe. Les gérants sont invités par un lien
-   envoyé sur WhatsApp, sans avoir besoin d'email.*
-
-2. **Colocation :** un bail peut-il être au nom de plusieurs locataires ?
-   → *Recommandation : oui, avec un titulaire principal désigné.*
-
-3. **Locataires entreprises :** faut-il gérer des sociétés (raison sociale, RCCM),
-   ou seulement des particuliers ?
-   → *Recommandation : oui, puisque tu listes boutiques, magasins et bureaux.*
-
-4. **Périmètre du gérant :** un intendant voit-il tous les immeubles, ou seulement
-   ceux qu'on lui attribue ?
-   → *Recommandation : seulement ceux qu'on lui attribue, avec « tous » par défaut.*
-
-5. **Les charges :** montant fixe ajouté au loyer, ou variable relevé chaque mois
-   (eau, électricité) et refacturé ?
-   → *Recommandation : forfait fixe au départ, la refacturation réelle en phase 2.*
-
-6. **Numérotation :** une seule série pour les reçus et les quittances, ou deux séries
-   séparées ?
-   → *Recommandation : deux séries, `REC-2026-0001` et `QUI-2026-0001`. Ce sont deux
-   documents de nature juridique différente.*
-
-7. **Trop-perçu :** quand un locataire paie plus que ce qu'il doit, on impute
-   automatiquement sur les mois suivants, ou on garde un crédit à imputer à la main ?
-   → *Recommandation : imputation automatique sur les échéances les plus anciennes,
-   puis les suivantes ; le reste devient un crédit visible sur la fiche du bail.*
-
-8. **Reprise de l'existant :** au moment de créer un bail déjà en cours, doit-on
-   pouvoir saisir la dette antérieure du locataire ?
-   → *Recommandation : oui, un champ « solde de départ » sur le bail. Sans lui,
-   l'écran des impayés est faux dès le premier jour.*
+1. **Un paiement ne se rattache pas à une échéance.** Un versement peut couvrir douze mois
+   et une échéance peut recevoir plusieurs versements. Il faut une table intermédiaire qui
+   dit « telle partie de tel paiement paie telle échéance ». C'est encore plus vrai avec ce
+   nouveau brief, où l'avance d'un an est présentée comme la norme.
+2. **Il faut une protection contre les doublons de paiement.** Quand un téléphone réessaie
+   d'envoyer une saisie après une coupure de réseau, rien n'empêche le serveur de
+   l'enregistrer deux fois.
+3. **Il faut un solde de départ sur les baux.** Les bailleurs arrivent avec des locataires
+   déjà en place et souvent des arriérés. Sans ce champ, l'écran des impayés est faux dès
+   le premier jour.
