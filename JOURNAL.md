@@ -1,93 +1,115 @@
 # Journal de bord du projet
 
-Écrit pour toi, pas pour un développeur. Ce fichier raconte en français simple ce qui a été
-fait, ce qui a été décidé et pourquoi. Mis à jour à la fin de chaque étape.
+Écrit pour toi, pas pour un développeur. Ce fichier raconte en français simple ce qui a
+été fait, ce qui a été décidé et pourquoi. Mis à jour à la fin de chaque étape.
 
 ---
 
-## 6 septembre 2026 — Refonte complète après ton nouveau brief
+## 8 septembre 2026 — La version 1 est construite et testée
 
-### Ce qui a changé
-Ton nouveau brief est nettement plus complet que le précédent et modifie des choses de
-fond. J'ai donc repris tous les documents à zéro plutôt que de les rapiécer.
+### Ce qui existe maintenant
+Une application complète qui tourne. Le nom retenu est **laloc**, la charte est beige
+avec un accent terre cuite. Quarante-deux écrans, deux espaces (bailleur et locataire),
+quatorze documents en PDF.
 
-Les changements qui ont le plus d'effet sur la construction :
+Pour la voir : `npm install`, puis `npm run dev`, puis ouvrir `http://localhost:3000`
+et cliquer sur « Ouvrir la démonstration ». Le README explique tout, commande par commande.
 
-| Avant | Maintenant |
-|---|---|
-| Un seul espace, pour le bailleur | Deux espaces : bailleur **et** locataire |
-| Connexion par email | **Connexion par numéro de téléphone** |
-| Trois rôles | Quatre : bailleur, mandataire, locataire, admin |
-| Un utilisateur = un rôle | Un utilisateur peut être bailleur **et** locataire |
-| Abonnement par unité envisagé | **Application entièrement gratuite**, rien de facturé |
-| Deux ou trois documents | **Quatorze documents** à générer |
-| Charges en forfait | **Cinq modes de charges**, dont les relevés de compteurs |
-| Pas de signature | **Signature électronique avec dossier de preuve** |
+### Ce qui a été vérifié, et comment
+Deux recettes automatiques déroulent l'application dans un vrai navigateur, comme le
+ferait une personne. Elles sont dans `tests/` et tu peux les relancer toi-même.
 
-J'ai supprimé du plan tout ce qui touchait à un abonnement ou à un comptage d'unités
-facturables. Tu as été explicite : rien de tel, même en préparation.
+**Recette 1, le scénario complet de ton cahier des charges : 15 étapes sur 15.**
+Création de compte par téléphone, immeuble à 3 studios, locataire avec pièce d'identité,
+bail à 60 000 FCFA, échéancier généré tout seul, paiement partiel de 40 000 donnant un
+**reçu**, solde de 20 000 donnant une **quittance**, PDF qui s'ouvre, bouton WhatsApp
+avec le bon numéro, studio passé en « occupé », et consultation hors connexion.
 
-### Ce que j'ai vérifié avant de te répondre
-Un point technique décisif, que je ne voulais pas te donner de mémoire.
+**Recette 2, le reste : 16 étapes sur 16.**
+Tableau de bord, état des lieux pièce par pièce avec signature au doigt, figeage
+définitif, relances préparées automatiquement, export ZIP, journal des actions, espace
+locataire, et surtout la vérification qu'un locataire ne voit **rien** des autres.
 
-**Supabase exige qu'un service d'envoi de SMS soit configuré pour activer la connexion par
-téléphone**, même en désactivant la vérification par code. Ta règle « téléphone + mot de
-passe, sans SMS » ne peut donc pas être appliquée directement avec l'outil choisi.
+### Quatre vrais défauts trouvés et corrigés pendant les tests
+Ils méritent d'être notés, parce que trois d'entre eux étaient invisibles à l'œil nu.
 
-La solution retenue est expliquée en détail dans `docs/authentification.md` : l'utilisateur
-saisit son numéro et rien d'autre, l'application le transforme en identifiant interne
-invisible. Coût : zéro. Et le jour où tu voudras ajouter un code par SMS ou par WhatsApp,
-il n'y aura rien à réécrire.
+1. **Les montants qui ne sont pas des multiples ronds étaient refusés.** Les champs de
+   saisie avaient un « pas » de 5 000, ce qui rendait 62 500 FCFA invalide : le
+   navigateur bloquait l'envoi du formulaire **sans afficher le moindre message**. Un
+   bailleur avec un loyer inhabituel serait resté coincé sans comprendre. Corrigé
+   partout : en francs CFA, tout nombre entier est désormais accepté.
 
-J'ai aussi vérifié les tarifs d'hébergement réels plutôt que de te donner des ordres de
-grandeur approximatifs. Ils sont dans `docs/couts.md`, avec le calcul du poids des photos
-d'états des lieux, qui est de loin le premier poste de dépense.
+2. **Les espaces des montants sortaient en barres obliques dans les PDF.** J'utilisais
+   une espace fine insécable qui n'existe pas dans l'encodage des documents PDF :
+   « 150 000 FCFA » s'imprimait « 150 /000 /FCFA ». Corrigé.
 
-### Ce que j'ai produit
-Toujours **aucune ligne de code**, comme tu l'as demandé.
+3. **Les dates sautaient d'un jour en fin de soirée.** Une quittance émise à 23 h portait
+   la date du lendemain à un endroit et celle du jour à un autre. Tous les horodatages
+   sont maintenant ramenés à l'heure de Douala avant d'être affichés.
 
-- `README.md` — le point d'entrée du projet, en français
-- `docs/plan-etapes.md` — dix-huit étapes, avec ce que tu verras marcher à la fin de chacune
-- `docs/modele-donnees.md` — tout ce que l'application mémorise, refondu
-- `docs/authentification.md` — la connexion par téléphone et le mot de passe oublié
-- `docs/couts.md` — les coûts réels, sources à l'appui
-- `docs/points-juridiques-a-valider.md` — les questions transversales pour ton juriste
-- `contenu-juridique/` — quatorze fichiers vides, un par document, à remplir avec les
-  textes validés. **Aucun texte de loi inventé, aucun numéro d'article cité.**
+4. **Un locataire pur se voyait proposer « Mes biens ».** Le lien menait à un écran de
+   bailleur vide. On n'est désormais bailleur que si l'on possède réellement un bien.
 
-### Les cinq changements que je propose dans ton découpage
-Détaillés en bas de `docs/plan-etapes.md`. En résumé :
+### Le « e » de « cent »
+Petit détail qui dit le soin apporté : « 1 500 000 » s'écrit « un million cinq **cent**
+mille », sans s, parce que « mille » est un adjectif numéral. Mais « deux **cents**
+millions » en prend un, parce que « million » est un nom. Vingt et un cas de test
+couvrent cette règle et les autres pièges des nombres en français.
 
-1. L'espace locataire **après** l'espace bailleur. Aucun locataire n'utilisera
-   l'application si son bailleur ne s'en sert pas déjà.
-2. Les quatorze documents en deux fois : les trois du quotidien tôt, les onze autres après.
-3. La signature électronique après les documents, pas avec.
-4. Le pré-remplissage automatique d'un bail scanné : hors version 1. Le téléversement du
-   bail papier, lui, reste bien dans le parcours de démarrage.
-5. Le mandataire : la structure de données dès le début, l'écran plus tard.
+### Ce que je n'ai pas fait, et pourquoi
+- **Aucun texte juridique inventé.** Les clauses des contrats sont des emplacements
+  vides, marqués en jaune dans l'écran des modèles. Chaque document porte la mention
+  « modèle indicatif ». Le dossier `contenu-juridique/` attend tes textes validés.
+- **Aucun module d'abonnement ou de facturation**, comme tu l'as demandé, pas même en
+  préparation.
+- **La saisie hors connexion n'est pas encore mise en file d'attente.** L'application se
+  *consulte* sans réseau, mais une saisie faite hors ligne n'est pas encore rejouée au
+  retour de la connexion. C'est le dernier chantier, et tu l'avais toi-même mis en
+  dernier.
+- **Pas de pré-remplissage automatique d'un bail scanné.** Le téléversement du bail
+  papier, lui, est bien là.
 
-### En attente de ta réponse
-Sept questions, posées dans la conversation. Chacune a une recommandation, tu peux
-répondre « d'accord pour tes valeurs par défaut ».
+### Ce qui reste avant une vraie mise en service
+1. Faire valider les textes juridiques et les saisir.
+2. Passer de la base de démonstration à Supabase. Toute la couche base est isolée dans
+   `src/lib/db/` pour que ce changement ne touche rien d'autre.
+3. Mettre en ligne sur Vercel et brancher le nom de domaine.
+4. La file d'attente hors ligne.
 
 ### Prochaine étape
-Étape 0 — choix du nom et création des comptes, dès que tu valides.
+Tu regardes la démonstration et tu me dis ce qui cloche. Il y aura des choses : c'est
+normal et c'est le but.
 
 ---
 
-## 30 août 2026 — Première étude *(largement remplacée)*
+## 6 septembre 2026 — Refonte du cadrage
 
-Première analyse, sur la base du brief précédent. Le modèle de données et le découpage
-produits ce jour-là ont été refondus le 6 septembre. Trois constats de cette première
-étude restent valables et ont été repris tels quels :
+Ton nouveau brief a modifié des choses de fond : deux espaces au lieu d'un, connexion par
+numéro de téléphone, quatre rôles cumulables, application entièrement gratuite, quatorze
+documents, cinq modes de charges, signature électronique. J'ai repris tous les documents
+de cadrage plutôt que de les rapiécer.
 
-1. **Un paiement ne se rattache pas à une échéance.** Un versement peut couvrir douze mois
-   et une échéance peut recevoir plusieurs versements. Il faut une table intermédiaire qui
-   dit « telle partie de tel paiement paie telle échéance ». C'est encore plus vrai avec ce
-   nouveau brief, où l'avance d'un an est présentée comme la norme.
-2. **Il faut une protection contre les doublons de paiement.** Quand un téléphone réessaie
-   d'envoyer une saisie après une coupure de réseau, rien n'empêche le serveur de
-   l'enregistrer deux fois.
-3. **Il faut un solde de départ sur les baux.** Les bailleurs arrivent avec des locataires
-   déjà en place et souvent des arriérés. Sans ce champ, l'écran des impayés est faux dès
-   le premier jour.
+**Le point technique vérifié ce jour-là, qui a tenu :** Supabase exige qu'un service
+d'envoi de SMS soit branché pour activer la connexion par téléphone, même sans code de
+vérification. La solution retenue est expliquée dans `docs/authentification.md`.
+Dans la démonstration actuelle, la connexion par numéro fonctionne sans aucun SMS et
+sans aucun coût.
+
+**Les cinq changements de découpage proposés** ont tous été suivis : espace locataire
+après l'espace bailleur, documents en deux fois, signature après les documents, pas de
+lecture automatique des scans, structure du mandataire dès le début.
+
+---
+
+## 30 août 2026 — Première étude
+
+Première analyse sur la base du brief précédent. Trois constats de ce jour-là ont
+structuré tout le reste, et se retrouvent dans le code d'aujourd'hui :
+
+1. **Un paiement ne se rattache pas à une échéance** mais au bail, avec une table
+   d'imputations. C'est ce qui rend possible l'avance d'un an, qui est la norme au
+   Cameroun, et le paiement fractionné.
+2. **Une protection contre les doublons de paiement** est indispensable, car un
+   téléphone qui réessaie après une coupure enregistrerait l'argent deux fois.
+3. **Un solde de départ sur les baux**, parce que les bailleurs arrivent avec des
+   locataires déjà en place et souvent des arriérés.

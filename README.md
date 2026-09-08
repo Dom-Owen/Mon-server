@@ -1,79 +1,162 @@
-# Application de gestion locative — Cameroun
+# laloc
 
-Application web pour les bailleurs particuliers et leurs locataires au Cameroun.
-Centraliser ses biens, ses locataires, ses loyers et ses documents, et les générer
-proprement en PDF.
+Application web de gestion locative pour les bailleurs particuliers et leurs locataires
+au Cameroun. Centraliser ses biens, ses locataires, ses loyers et ses documents, et les
+générer proprement en PDF, depuis un téléphone.
 
-> **Nom de travail : à choisir.** Il apparaîtra sur les documents, dans l'adresse du site
-> et sur l'icône du téléphone. Tant qu'il n'est pas arrêté, le projet s'appelle
-> « gestion locative ».
-
-**État du projet : étude préalable. Aucun code écrit à ce jour.**
+**État : version 1 complète, en démonstration.** Elle tourne sur votre ordinateur avec
+des données d'exemple, sans aucun compte à créer.
 
 ---
 
-## Par où commencer si tu ouvres ce dossier pour la première fois
+## Voir la démonstration en trois commandes
 
-Lis dans cet ordre :
+Ouvrez le terminal dans ce dossier et tapez ces commandes **une par une**, en attendant
+que chacune se termine.
 
-| Fichier | Ce qu'il contient |
+**1. Installer ce dont l'application a besoin** (à faire une seule fois) :
+
+```
+npm install
+```
+
+**2. Démarrer l'application** :
+
+```
+npm run dev
+```
+
+**3. Ouvrir votre navigateur** à l'adresse :
+
+```
+http://localhost:3000
+```
+
+Sur la page de connexion, cliquez sur **« Ouvrir la démonstration »**. Vous arrivez dans
+le compte d'Achille Mbarga, un bailleur de Douala avec un immeuble, une maison, une
+boutique, quatre locataires et leurs paiements.
+
+Pour arrêter l'application, revenez dans le terminal et appuyez sur `Ctrl` + `C`.
+
+### Voir aussi le côté locataire
+
+Déconnectez-vous, puis reconnectez-vous avec :
+
+| Champ | Valeur |
 |---|---|
-| `docs/plan-etapes.md` | Le plan de travail, étape par étape, avec ce que tu verras marcher à la fin de chacune |
-| `docs/modele-donnees.md` | Tout ce que l'application mémorise, en français, sans jargon |
-| `docs/authentification.md` | Comment marche la connexion par numéro de téléphone, et le mot de passe oublié |
-| `docs/couts.md` | Ce que ça coûte d'héberger l'application, et ce qui peut devenir cher |
-| `docs/points-juridiques-a-valider.md` | Les questions à poser à ton juriste |
-| `contenu-juridique/` | Un fichier par document légal, à remplir avec les textes validés |
-| `JOURNAL.md` | Ce qui a été fait, quand, et pourquoi |
+| Numéro | `677 44 55 66` |
+| Mot de passe | `demo1234` |
+
+Vous verrez ce que voit Marie Ngo Bell : son bail, ses quittances, son solde, et les
+boutons pour signaler un incident ou déposer un préavis.
+
+### Voir sur votre téléphone
+
+Sur le même wifi que l'ordinateur, ouvrez `http://ADRESSE-DE-L-ORDINATEUR:3000`.
+Pour connaître cette adresse, tapez `hostname -I` sur Linux, ou `ipconfig` sur Windows.
 
 ---
 
-## Lancer le projet sur ton ordinateur
+## Ce que fait l'application
 
-*Cette section sera remplie à l'étape 1, quand le projet existera. Pour l'instant il n'y a
-rien à lancer.*
+**Côté bailleur**
 
-Elle contiendra, une commande à la fois :
-1. comment installer les outils nécessaires,
-2. comment récupérer le projet,
-3. comment le démarrer,
-4. ce que tu dois voir à l'écran quand ça marche.
+- Tableau de bord : encaissé du mois, impayés, préavis, baux qui finissent
+- Biens et logements, avec un adressage camerounais (ville, quartier, point de repère)
+- Locataires, particuliers ou entreprises, avec pièce d'identité et garant
+- Baux, avec génération automatique de tout l'échéancier
+- Paiements en trois gestes, avances sur plusieurs mois, paiements partiels
+- Quatorze documents en PDF, numérotés, archivés, figés
+- États des lieux pièce par pièce, avec photos et signature au doigt
+- Charges : cinq modes, dont relevés de compteurs et répartition d'une facture commune
+- Relances préparées automatiquement, envoi WhatsApp en un clic
+- Mandataires avec droits délégués et révocables
+- Journal de toutes les actions, impossible à modifier
+- Export complet de toutes vos données en une archive
+
+**Côté locataire**
+
+Son logement, son bail, ses quittances, son historique de paiement, son solde, ses états
+des lieux. Le dépôt d'un préavis et le signalement d'un incident avec photo. Aucune
+possibilité de modifier quoi que ce soit.
 
 ---
 
 ## Où sont les fichiers importants
 
-*Sera rempli au fur et à mesure. Chaque fois que je crée un fichier que tu pourrais avoir
-besoin de retrouver, je l'ajoute ici avec une phrase expliquant à quoi il sert.*
+Vous n'avez pas besoin d'y toucher, mais voici la carte du projet.
+
+| Dossier ou fichier | À quoi il sert |
+|---|---|
+| `src/app/` | Un dossier par écran de l'application |
+| `src/app/app/` | Les écrans du bailleur |
+| `src/app/locataire/` | L'espace du locataire |
+| `src/components/` | Les morceaux réutilisés partout (boutons, cartes, formulaires) |
+| `src/lib/db/schema.sql` | La liste de tout ce que l'application mémorise |
+| `src/lib/domain/` | Les calculs : échéancier, imputation des paiements, montants en lettres |
+| `src/lib/pdf/` | La fabrication des documents PDF |
+| `src/lib/actions/` | Ce qui se passe quand vous validez un formulaire |
+| `contenu-juridique/` | **Un fichier par document légal, à remplir avec vos textes validés** |
+| `docs/` | Le modèle de données, le plan, les coûts, les questions juridiques |
+| `donnees/` | La base de données de la démonstration (créée au premier lancement) |
 
 ---
 
 ## Les modifications les plus courantes
 
-*Sera rempli au fur et à mesure. On y trouvera par exemple : changer le texte d'une clause,
-ajouter une ville à la liste, modifier le délai de préavis par défaut, changer le logo sur
-les quittances.*
+**Changer les délais de préavis, la caution, l'avance par défaut**
+Dans l'application : *Plus → Réglages*. Rien n'est écrit en dur dans le code.
+
+**Écrire les clauses de vos contrats**
+Dans l'application : *Plus → Modèles de documents*. Les clauses vides sont marquées
+« clause à fournir ». Le texte de référence se range aussi dans `contenu-juridique/`.
+
+**Changer le texte des relances**
+Dans l'application : *Plus → Relances*, en bas de page, en français et en anglais.
+
+**Repartir de zéro**
+Arrêtez l'application, supprimez le dossier `donnees/`, redémarrez. Tout est effacé et
+vous pouvez recréer la démonstration.
+
+**Changer les couleurs**
+Dans `tailwind.config.ts`. La charte actuelle est beige avec un accent terre cuite.
 
 ---
 
 ## Deux règles de sécurité qui ne changeront jamais
 
-1. **Aucune clé secrète dans le projet.** Les mots de passe d'accès à la base de données
-   vivent dans un fichier `.env.local` qui reste sur ton ordinateur et ne part jamais sur
-   internet. Si je te demande une clé, elle va là et nulle part ailleurs.
-2. **La sécurité est dans la base, pas dans l'écran.** Cacher un bouton ne protège rien.
-   Le refus d'accès aux données d'un autre bailleur vient de la base de données elle-même.
-   On le vérifiera ensemble à l'étape 2.
+1. **Aucune clé secrète dans le projet.** Elles vivent dans un fichier `.env.local` qui
+   reste sur votre ordinateur et ne part jamais sur internet.
+2. **La sécurité est dans les données, pas dans l'écran.** Cacher un bouton ne protège
+   rien. Un mandataire à qui vous n'avez pas délégué la résiliation se voit refuser
+   l'action côté serveur, pas seulement masquer le bouton.
 
 ---
 
-## Ce que l'application ne fera pas en version 1
+## Ce qui reste à faire avant une vraie mise en service
 
-- Pas de paiement Mobile Money automatique (prévu ensuite, l'architecture est prête).
-- Pas de signature électronique avec certificat agréé (niveau 2, prévu ensuite).
-- **Aucun abonnement, aucune facturation, aucune limite artificielle.** L'application est
-  entièrement gratuite pour ses utilisateurs.
-- Pas d'application à télécharger sur les magasins : le site s'installe directement sur
-  l'écran d'accueil du téléphone.
+Ces points sont documentés en détail dans `docs/`.
+
+1. **Faire valider les textes juridiques** par un juriste camerounais, et les saisir.
+   Tant que ce n'est pas fait, chaque document porte la mention « modèle indicatif ».
+2. **Passer de la base de démonstration à Supabase**, pour que les données vivent en
+   ligne et non dans un fichier sur votre ordinateur. Toute la couche base est isolée
+   dans `src/lib/db/` pour que ce changement ne touche rien d'autre.
+3. **Mettre en ligne sur Vercel** et brancher un nom de domaine.
+4. **La file d'attente hors ligne** : aujourd'hui l'application se consulte sans réseau,
+   mais les saisies faites hors connexion ne sont pas encore mises en attente.
+
+---
+
+## Ce que l'application ne fait pas, volontairement
+
+- Pas de paiement Mobile Money automatique. L'architecture est prête à l'accueillir :
+  toute la logique d'encaissement passe par une seule interface.
+- Pas de signature électronique avec certificat agréé. Le niveau 1 est en place, avec
+  son dossier de preuve, et l'interface dit honnêtement ce qu'il vaut.
+- **Aucun abonnement, aucune facturation, aucune limite par nombre de biens.**
+  L'application est gratuite pour ses utilisateurs, et rien n'a été codé pour préparer
+  le contraire.
+- Pas d'application à télécharger : le site s'installe sur l'écran d'accueil du téléphone.
 - Pas de comptabilité ni de fiscalité automatisée.
-- Pas de recherche de logement ni de mise en relation. On gère l'existant.
+- Pas de recherche de logement. On gère l'existant, on ne fait pas une place de marché.
