@@ -1,3 +1,14 @@
+/**
+ * Schéma de la base de données de laloc.
+ *
+ * Le SQL est embarqué dans le code plutôt que lu depuis un fichier au démarrage :
+ * un hébergement sans disque permanent ne garantit pas la présence des fichiers
+ * source à côté du programme.
+ *
+ * Convention : montants = entiers en francs CFA. Dates métier = 'AAAA-MM-JJ'.
+ * Horodatages = ISO complet. Identifiants = UUID fabriqués côté client.
+ */
+export const SCHEMA = `
 -- laloc — schéma de la base de données
 -- Convention : montants = entiers en francs CFA. Dates métier = 'AAAA-MM-JJ'.
 -- Horodatages = ISO complet. Identifiants = UUID fabriqués côté client.
@@ -497,3 +508,4 @@ CREATE TABLE IF NOT EXISTS journal_audit (
   cree_le TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_audit_proprio ON journal_audit(proprietaire_id, cree_le DESC);
+`;

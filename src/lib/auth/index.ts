@@ -12,8 +12,24 @@ import { db, nouvelId, maintenant } from "@/lib/db";
  */
 
 const NOM_COOKIE = "laloc_session";
+
+/**
+ * Clé utilisée pour signer le cookie de session.
+ *
+ * Elle doit venir de l'environnement, jamais du code : une clé publiée sur internet
+ * permettrait à n'importe qui de fabriquer une session valide. En ligne, on avertit
+ * bruyamment si elle est absente plutôt que de faire semblant que tout va bien.
+ */
 const SECRET =
   process.env.LALOC_SECRET ?? "cle-de-demonstration-a-remplacer-en-production";
+
+if (!process.env.LALOC_SECRET && process.env.NODE_ENV === "production") {
+  console.warn(
+    "[laloc] LALOC_SECRET n'est pas défini : les sessions sont signées avec la clé " +
+      "de démonstration, connue publiquement. À renseigner dans les réglages de " +
+      "l'hébergeur avant d'y mettre de vraies données.",
+  );
+}
 
 export type Profil = {
   id: string;

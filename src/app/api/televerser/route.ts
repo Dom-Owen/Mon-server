@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import crypto from "node:crypto";
 import { profilConnecte } from "@/lib/auth";
+import { DOSSIER_FICHIERS, adresseFichier, preparerDossiers } from "@/lib/stockage";
 
 /**
  * Réception d'un fichier déjà compressé par le navigateur.
@@ -48,12 +49,11 @@ export async function POST(requete: Request) {
           ? "webp"
           : "jpg";
   const nom = `${empreinte.slice(0, 24)}.${extension}`;
-  const dossier = path.join(process.cwd(), "public", "televerse");
-  await fs.mkdir(dossier, { recursive: true });
-  await fs.writeFile(path.join(dossier, nom), octets);
+  preparerDossiers();
+  await fs.writeFile(path.join(DOSSIER_FICHIERS, nom), octets);
 
   return NextResponse.json({
-    chemin: `/televerse/${nom}`,
+    chemin: adresseFichier(nom),
     taille: octets.length,
     format: extension,
     hash: empreinte,

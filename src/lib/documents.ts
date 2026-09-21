@@ -9,8 +9,8 @@ import { specDepuisDonnees, type DonneesFigees } from "@/lib/pdf/documents";
 import { parametresDe, bailParId, nomLogement } from "@/lib/requetes";
 import { aujourdhui, MODES_PAIEMENT } from "@/lib/format";
 import { tracer } from "@/lib/audit";
+import { DOSSIER_DOCUMENTS, preparerDossiers } from "@/lib/stockage";
 
-const DOSSIER_PDF = path.join(process.env.LALOC_DONNEES ?? path.join(process.cwd(), "donnees"), "documents");
 
 /** Coordonnées du bailleur, telles qu'elles figureront sur le document. */
 export function enTeteBailleur(proprietaireId: string) {
@@ -60,9 +60,9 @@ export async function emettreDocument(
 
   const id = nouvelId();
   const pdf = await rendrePdf(specDepuisDonnees(figees));
-  fs.mkdirSync(DOSSIER_PDF, { recursive: true });
+  preparerDossiers();
   const nomFichier = `${id}.pdf`;
-  fs.writeFileSync(path.join(DOSSIER_PDF, nomFichier), pdf);
+  fs.writeFileSync(path.join(DOSSIER_DOCUMENTS, nomFichier), pdf);
   const empreinte = crypto.createHash("sha256").update(pdf).digest("hex");
 
   base.transaction(() => {
@@ -120,7 +120,7 @@ export function signatureValide(documentId: string, signature: string): boolean 
 }
 
 export function cheminPdf(nomFichier: string): string {
-  return path.join(DOSSIER_PDF, nomFichier);
+  return path.join(DOSSIER_DOCUMENTS, nomFichier);
 }
 
 /** Reconstruit le PDF à l'identique depuis l'instantané, si le fichier a disparu. */

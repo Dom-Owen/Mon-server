@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ServiceWorker } from "@/components/service-worker";
+import { BandeauDemonstration } from "@/components/bandeau-demonstration";
 
 export const metadata: Metadata = {
   title: "laloc — gestion locative",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr">
       <body>
+        <BandeauDemonstration />
         {children}
         <ServiceWorker />
       </body>

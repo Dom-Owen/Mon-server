@@ -1,6 +1,7 @@
 import Database from "better-sqlite3";
-import fs from "node:fs";
 import path from "node:path";
+import { SCHEMA } from "./schema";
+import { DOSSIER_BASE, preparerDossiers } from "@/lib/stockage";
 
 /**
  * Base de données de la démonstration.
@@ -11,22 +12,17 @@ import path from "node:path";
  * touchera que ce dossier.
  */
 
-const DOSSIER = process.env.LALOC_DONNEES ?? path.join(process.cwd(), "donnees");
-const FICHIER = path.join(DOSSIER, "laloc.db");
+const FICHIER = path.join(DOSSIER_BASE, "laloc.db");
 
 let instance: Database.Database | null = null;
 
 export function db(): Database.Database {
   if (instance) return instance;
-  fs.mkdirSync(DOSSIER, { recursive: true });
+  preparerDossiers();
   const base = new Database(FICHIER);
   base.pragma("journal_mode = WAL");
   base.pragma("foreign_keys = ON");
-  const schema = fs.readFileSync(
-    path.join(process.cwd(), "src/lib/db/schema.sql"),
-    "utf-8",
-  );
-  base.exec(schema);
+  base.exec(SCHEMA);
   instance = base;
   return base;
 }

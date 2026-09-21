@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { profilConnecte, contexteDe } from "@/lib/auth";
 import { creerZip, csv } from "@/lib/zip";
 import { pdfDuDocument } from "@/lib/documents";
+import { cheminDepuisAdresse } from "@/lib/stockage";
 import { aujourdhui, dateLongue, MODES_PAIEMENT } from "@/lib/format";
 import { titreDocument } from "@/lib/pdf/documents";
 
@@ -149,11 +150,11 @@ export async function GET(requete: Request) {
   for (const p of photosEdl) chemins.add(p.fichier);
 
   for (const c of chemins) {
-    if (!c || !c.startsWith("/televerse/")) continue;
-    const chemin = path.join(process.cwd(), "public", c);
+    const chemin = c ? cheminDepuisAdresse(c) : null;
+    if (!chemin) continue;
     try {
       if (fs.existsSync(chemin)) {
-        fichiers.push({ nom: `fichiers/${path.basename(c)}`, contenu: fs.readFileSync(chemin) });
+        fichiers.push({ nom: `fichiers/${path.basename(chemin)}`, contenu: fs.readFileSync(chemin) });
       }
     } catch {
       // idem : un fichier manquant ne bloque pas l'archive

@@ -92,7 +92,7 @@ Vous n'avez pas besoin d'y toucher, mais voici la carte du projet.
 | `src/app/app/` | Les écrans du bailleur |
 | `src/app/locataire/` | L'espace du locataire |
 | `src/components/` | Les morceaux réutilisés partout (boutons, cartes, formulaires) |
-| `src/lib/db/schema.sql` | La liste de tout ce que l'application mémorise |
+| `src/lib/db/schema.ts` | La liste de tout ce que l'application mémorise |
 | `src/lib/domain/` | Les calculs : échéancier, imputation des paiements, montants en lettres |
 | `src/lib/pdf/` | La fabrication des documents PDF |
 | `src/lib/actions/` | Ce qui se passe quand vous validez un formulaire |
@@ -130,6 +130,19 @@ Dans `tailwind.config.ts`. La charte actuelle est beige avec un accent terre cui
 2. **La sécurité est dans les données, pas dans l'écran.** Cacher un bouton ne protège
    rien. Un mandataire à qui vous n'avez pas délégué la résiliation se voit refuser
    l'action côté serveur, pas seulement masquer le bouton.
+
+---
+
+## Mettre le site en ligne
+
+Tout est prêt. La marche à suivre, clic par clic et sans aucune commande à taper, est
+dans `docs/mise-en-ligne.md`.
+
+Un point à connaître avant de commencer : en ligne, les données ne sont pas encore
+conservées durablement. L'application fonctionne entièrement, mais les saisies
+disparaissent au bout de quelques heures et un bandeau le dit à qui l'utilise. C'est
+fait pour montrer le produit, pas encore pour y mettre de vrais loyers. La persistance
+arrive avec la base Supabase, qui est l'étape suivante.
 
 ---
 
