@@ -1,0 +1,18 @@
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+
+# Secrets : ne doivent jamais partir sur internet
+.env
+.env.local
+.env*.local
+
+# Base de données de démonstration et fichiers téléversés
+/donnees/
+/public/televerse/
+
+.DS_Store
+*.log

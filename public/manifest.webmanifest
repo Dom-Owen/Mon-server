@@ -1,0 +1,22 @@
+{
+  "name": "laloc — gestion locative",
+  "short_name": "laloc",
+  "description": "Vos biens, vos loyers, vos papiers. Depuis votre téléphone.",
+  "start_url": "/app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF6EF",
+  "theme_color": "#FAF6EF",
+  "lang": "fr",
+  "dir": "ltr",
+  "icons": [
+    { "src": "/icone-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Enregistrer un paiement", "url": "/app/paiements/nouveau" },
+    { "name": "Impayés", "url": "/app/impayes" }
+  ]
+}
