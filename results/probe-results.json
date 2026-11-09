@@ -1,0 +1,466 @@
+{
+  "ranAt": "2026-11-09T06:37:36.848Z",
+  "runner": "GitHub Actions",
+  "results": [
+    {
+      "id": "fx-frankfurter-v1",
+      "need": "change",
+      "api": "Frankfurter",
+      "url": "https://api.frankfurter.dev/v1/latest?symbols=USD,GBP,JPY,CHF",
+      "status": 200,
+      "ms": 609,
+      "bytes": 110,
+      "contentType": "application/json; charset=utf-8",
+      "headers": {
+        "cache-control": "public, max-age=86400"
+      },
+      "sample": {
+        "amount": 1,
+        "base": "EUR",
+        "date": "2026-11-06",
+        "rates": {
+          "CHF": 0.9143,
+          "GBP": 0.83415,
+          "JPY": 176.77,
+          "USD": 1.1165
+        }
+      }
+    },
+    {
+      "id": "fx-frankfurter-v2",
+      "need": "change",
+      "api": "Frankfurter",
+      "url": "https://api.frankfurter.dev/v2/rate/eur/usd",
+      "status": 200,
+      "ms": 440,
+      "bytes": 62,
+      "contentType": "application/json; charset=utf-8",
+      "headers": {
+        "cache-control": "public, max-age=62582, stale-if-error=86400"
+      },
+      "sample": {
+        "date": "2026-11-09",
+        "base": "EUR",
+        "quote": "USD",
+        "rate": 1.1197
+      }
+    },
+    {
+      "id": "fx-currencyapi-jsdelivr",
+      "need": "change",
+      "api": "Currency-api",
+      "url": "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.min.json",
+      "status": 200,
+      "ms": 49,
+      "bytes": 6163,
+      "contentType": "application/json; charset=utf-8",
+      "headers": {
+        "age": "24250",
+        "cache-control": "public, max-age=604800, s-maxage=43200"
+      },
+      "picked": {
+        "date": "2026-11-08",
+        "eur.usd": 1.11495082,
+        "eur.gbp": 0.83478579,
+        "eur.jpy": 176.69736019,
+        "eur.chf": 0.91468855,
+        "eur.xaf": 655.95699999
+      }
+    },
+    {
+      "id": "fx-currencyapi-pages",
+      "need": "change",
+      "api": "Currency-api",
+      "url": "https://latest.currency-api.pages.dev/v1/currencies/eur.min.json",
+      "status": 200,
+      "ms": 108,
+      "bytes": 6182,
+      "contentType": "application/json",
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate"
+      },
+      "picked": {
+        "date": "2026-11-09",
+        "eur.usd": 1.11601366,
+        "eur.gbp": 0.83411467
+      }
+    },
+    {
+      "id": "fx-vatcomply",
+      "need": "change",
+      "api": "VATComply",
+      "url": "https://api.vatcomply.com/rates?base=EUR",
+      "status": 200,
+      "ms": 303,
+      "bytes": 436,
+      "contentType": "application/json",
+      "headers": {
+        "cache-control": "public, max-age=300"
+      },
+      "picked": {
+        "date": "2026-11-06",
+        "base": "EUR",
+        "rates.USD": 1.1165,
+        "rates.GBP": 0.83415,
+        "rates.JPY": 176.77,
+        "rates.CHF": 0.9143
+      }
+    },
+    {
+      "id": "px-twelvedata-us-demo",
+      "need": "cours",
+      "api": "Twelve Data",
+      "url": "https://api.twelvedata.com/quote?symbol=AAPL&apikey=***",
+      "status": 200,
+      "ms": 255,
+      "bytes": 599,
+      "contentType": "application/json; charset=utf-8",
+      "headers": {},
+      "sample": {
+        "symbol": "AAPL",
+        "name": "Apple Inc.",
+        "exchange": "NASDAQ",
+        "mic_code": "XNGS",
+        "currency": "USD",
+        "datetime": "2026-11-06",
+        "timestamp": 1793975400,
+        "last_quote_at": 1793998740,
+        "open": "338.73001",
+        "high": "345.79001",
+        "low": "338.29999",
+        "close": "342.37000",
+        "volume": "44676300",
+        "previous_close": "344.17001",
+        "change": "-1.80002",
+        "…": "+4 clés"
+      }
+    },
+    {
+      "id": "px-twelvedata-paris-demo",
+      "need": "cours",
+      "api": "Twelve Data",
+      "url": "https://api.twelvedata.com/quote?symbol=MC&exchange=Euronext&apikey=***",
+      "status": 401,
+      "ms": 79,
+      "bytes": 296,
+      "contentType": "application/json; charset=utf-8",
+      "headers": {},
+      "sample": {
+        "code": 401,
+        "message": "The 'demo' API key is only used for initial familiarity. To become a full user, you can request your own API key at https://twelvedata.com/pricing. It is absolutely free, and it’s yours for a lifetime…",
+        "status": "error"
+      }
+    },
+    {
+      "id": "px-eodhd-us-demo",
+      "need": "cours",
+      "api": "EODHD",
+      "url": "https://eodhd.com/api/eod/AAPL.US?api_token=***&fmt=json&from=2026-11-01",
+      "status": 200,
+      "ms": 119,
+      "bytes": 596,
+      "contentType": "application/json",
+      "headers": {
+        "cache-control": "no-cache, private",
+        "x-ratelimit-limit": "1200",
+        "x-ratelimit-remaining": "1193"
+      },
+      "sample": [
+        {
+          "date": "2026-11-02",
+          "open": 342.67,
+          "high": 343.8,
+          "low": 335.82,
+          "close": 338.32,
+          "adjusted_close": 338.32,
+          "volume": 64757691
+        },
+        {
+          "date": "2026-11-03",
+          "open": 325.58,
+          "high": 334.5,
+          "low": 325.33,
+          "close": 331.9,
+          "adjusted_close": 331.9,
+          "volume": 63160026
+        },
+        "… +3"
+      ]
+    },
+    {
+      "id": "px-eodhd-paris-demo",
+      "need": "cours",
+      "api": "EODHD",
+      "url": "https://eodhd.com/api/eod/MC.PA?api_token=***&fmt=json&from=2026-11-01",
+      "status": 403,
+      "ms": 36,
+      "bytes": 9,
+      "contentType": "text/html; charset=utf-8",
+      "headers": {
+        "cache-control": "no-cache, private",
+        "x-ratelimit-limit": "1200",
+        "x-ratelimit-remaining": "1189"
+      },
+      "text": "Forbidden"
+    },
+    {
+      "id": "px-fmp-nokey",
+      "need": "cours",
+      "api": "Financial Modeling Prep",
+      "url": "https://financialmodelingprep.com/stable/quote?symbol=AAPL",
+      "status": 401,
+      "ms": 251,
+      "bytes": 184,
+      "contentType": "application/json; charset=utf-8",
+      "headers": {
+        "access-control-max-age": "3600"
+      },
+      "sample": {
+        "Error Message": "Invalid API KEY. Feel free to create a Free API Key or visit https://site.financialmodelingprep.com/faqs?search=why-is-my-api-key-invalid for more information."
+      }
+    },
+    {
+      "id": "px-fmp-demo",
+      "need": "cours",
+      "api": "Financial Modeling Prep",
+      "url": "https://financialmodelingprep.com/stable/quote?symbol=AAPL&apikey=***",
+      "status": 401,
+      "ms": 63,
+      "bytes": 184,
+      "contentType": "application/json; charset=utf-8",
+      "headers": {
+        "access-control-max-age": "3600"
+      },
+      "sample": {
+        "Error Message": "Invalid API KEY. Feel free to create a Free API Key or visit https://site.financialmodelingprep.com/faqs?search=why-is-my-api-key-invalid for more information."
+      }
+    },
+    {
+      "id": "px-finnhub-nokey",
+      "need": "cours",
+      "api": "Finnhub",
+      "url": "https://finnhub.io/api/v1/quote?symbol=AAPL",
+      "status": 401,
+      "ms": 160,
+      "bytes": 34,
+      "contentType": "application/json; charset=utf-8",
+      "headers": {},
+      "sample": {
+        "error": "Please use an API key."
+      }
+    },
+    {
+      "id": "px-alphavantage-demo",
+      "need": "cours",
+      "api": "Alpha Vantage",
+      "url": "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=***",
+      "status": 200,
+      "ms": 166,
+      "bytes": 385,
+      "contentType": "application/json",
+      "headers": {},
+      "sample": {
+        "Global Quote": {
+          "01. symbol": "IBM",
+          "02. open": "242.9200",
+          "03. high": "246.3400",
+          "04. low": "240.3500",
+          "05. price": "245.0000",
+          "06. volume": "3494073",
+          "07. latest trading day": "2026-11-06",
+          "08. previous close": "247.1100",
+          "09. change": "-2.1100",
+          "10. change percent": "-0.8539%"
+        }
+      }
+    },
+    {
+      "id": "fd-sec-companyfacts",
+      "need": "fondamentaux",
+      "api": "SEC EDGAR",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000320193.json",
+      "status": 403,
+      "ms": 144,
+      "bytes": 4815,
+      "contentType": "text/html",
+      "headers": {
+        "cache-control": "no-cache, no-store, must-revalidate"
+      },
+      "text": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Your Request Originates from an Undeclared Automated Tool</title> <style> html {height: 100%} body {height: 100%; margin:0; padding:0;} #hea"
+    },
+    {
+      "id": "fd-sec-tickers",
+      "need": "fondamentaux",
+      "api": "SEC EDGAR",
+      "url": "https://www.sec.gov/files/company_tickers.json",
+      "status": 403,
+      "ms": 122,
+      "bytes": 1924,
+      "contentType": "text/html",
+      "headers": {
+        "cache-control": "no-cache, no-store, must-revalidate"
+      },
+      "text": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> <style> html {height: 100%} body {height: 100%; margin:0; padding:0;} #header {background-color:#003"
+    },
+    {
+      "id": "fd-eodhd-demo",
+      "need": "fondamentaux",
+      "api": "EODHD",
+      "url": "https://eodhd.com/api/fundamentals/AAPL.US?api_token=***&fmt=json",
+      "status": 200,
+      "ms": 126,
+      "bytes": 982002,
+      "contentType": "application/json",
+      "headers": {
+        "cache-control": "no-cache, private",
+        "x-ratelimit-limit": "1200",
+        "x-ratelimit-remaining": "1160"
+      },
+      "picked": {
+        "General.Name": "Apple Inc.",
+        "General.Exchange": "NASDAQ",
+        "Highlights.PERatio": 38.1258,
+        "Highlights.ProfitMargin": 0.276
+      }
+    },
+    {
+      "id": "fd-alphavantage-overview-demo",
+      "need": "fondamentaux",
+      "api": "Alpha Vantage",
+      "url": "https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=***",
+      "status": 200,
+      "ms": 115,
+      "bytes": 2838,
+      "contentType": "application/json",
+      "headers": {},
+      "picked": {
+        "Name": "International Business Machines",
+        "PERatio": "20.9",
+        "ProfitMargin": "0.16"
+      }
+    },
+    {
+      "id": "fd-finnhub-nokey",
+      "need": "fondamentaux",
+      "api": "Finnhub",
+      "url": "https://finnhub.io/api/v1/stock/metric?symbol=AAPL&metric=all",
+      "status": 401,
+      "ms": 117,
+      "bytes": 34,
+      "contentType": "application/json; charset=utf-8",
+      "headers": {},
+      "sample": {
+        "error": "Please use an API key."
+      }
+    },
+    {
+      "id": "nw-marketaux-nokey",
+      "need": "actus",
+      "api": "MarketAux",
+      "url": "https://api.marketaux.com/v1/news/all?symbols=AAPL&language=en",
+      "status": 401,
+      "ms": 540,
+      "bytes": 85,
+      "contentType": "application/json",
+      "headers": {
+        "cache-control": "no-cache, private"
+      },
+      "sample": {
+        "error": {
+          "code": "invalid_api_token",
+          "message": "An invalid API token was supplied."
+        }
+      }
+    },
+    {
+      "id": "nw-gnews-nokey",
+      "need": "actus",
+      "api": "GNews",
+      "url": "https://gnews.io/api/v4/search?q=LVMH&lang=fr",
+      "status": 400,
+      "ms": 199,
+      "bytes": 159,
+      "contentType": "application/json; charset=utf-8",
+      "headers": {},
+      "sample": {
+        "errors": [
+          "No API key was sent. Add your API key as the apikey query parameter or in the X-Api-Key header. Your API key is on https://gnews.io/dashboard"
+        ]
+      }
+    },
+    {
+      "id": "nw-newsdata-nokey",
+      "need": "actus",
+      "api": "NewsData",
+      "url": "https://newsdata.io/api/1/latest?q=LVMH&language=fr",
+      "status": 401,
+      "ms": 208,
+      "bytes": 166,
+      "contentType": "application/json",
+      "headers": {
+        "retry-after": "900",
+        "x-ratelimit-limit": "60",
+        "x-ratelimit-remaining": "59",
+        "x-ratelimit-reset": "1794207151",
+        "x_rate_limit_remaining": "59"
+      },
+      "sample": {
+        "status": "error",
+        "results": {
+          "message": "The API key is missing. Please sign up to receive your free API key at: https://newsdata.io/register",
+          "code": "Unauthorized"
+        }
+      }
+    },
+    {
+      "id": "nw-finnhub-nokey",
+      "need": "actus",
+      "api": "Finnhub",
+      "url": "https://finnhub.io/api/v1/company-news?symbol=AAPL&from=2026-11-01&to=2026-11-08",
+      "status": 401,
+      "ms": 122,
+      "bytes": 34,
+      "contentType": "application/json; charset=utf-8",
+      "headers": {},
+      "sample": {
+        "error": "Please use an API key."
+      }
+    },
+    {
+      "id": "nw-alphavantage-demo",
+      "need": "actus",
+      "api": "Alpha Vantage",
+      "url": "https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&apikey=***",
+      "status": 200,
+      "ms": 317,
+      "bytes": 128575,
+      "contentType": "application/json",
+      "headers": {},
+      "picked": {
+        "items": 50,
+        "feed.0.title": "Apple Bringing Agent Capabilities To Siri? Report Says Apple’s AI Is Up For A Major Upgrade As CEO Ternus Pushes For Faster Roadmap",
+        "feed.0.time_published": "20261109T051834",
+        "feed.0.source": "TradingView"
+      }
+    },
+    {
+      "id": "nw-noozra-docs",
+      "need": "actus",
+      "api": "Noozra",
+      "url": "https://noozra.com/api",
+      "status": 200,
+      "ms": 140,
+      "bytes": 48673,
+      "contentType": "text/html; charset=utf-8",
+      "headers": {
+        "age": "542"
+      },
+      "text": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"robots\" content=\"max-image-preview:large, max-snippet:-1, max-video-preview:-1\"><meta name=\"color-scheme\" content=\"light dark\"><meta name=\"theme-color\" content=\"#e9e6dc\" media=\"(prefers-color-scheme: light)\"><meta name=\"theme-color\" content=\"#18181b\" media=\"(pr",
+      "links": [
+        "https://noozra.com/api",
+        "https://noozra.com/api/articles?category=tech&amp;limit=5",
+        "https://noozra.com/api/articles"
+      ]
+    }
+  ]
+}
