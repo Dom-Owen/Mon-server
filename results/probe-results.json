@@ -1,0 +1,75 @@
+{
+  "ranAt": "2026-11-09T06:47:51.867Z",
+  "runner": "GitHub Actions",
+  "results": [
+    {
+      "id": "nw-noozra-articles",
+      "need": "actus",
+      "api": "Noozra",
+      "url": "https://noozra.com/api/articles?limit=3",
+      "status": 401,
+      "ms": 297,
+      "bytes": 414,
+      "contentType": "application/json",
+      "headers": {
+        "cache-control": "no-store"
+      },
+      "sample": {
+        "api_pro": "API Pro, $9 for 30 days, gives 25,000 requests a day, commercial use of the API and the full archive of news, posts and jobs.",
+        "docs": "https://noozra.com/api",
+        "error": "an API key is required -- create a free Noozra account to get one",
+        "get_a_key": "https://noozra.com/account/api",
+        "hint": "Send it as the header Authorization: Bearer nk_...",
+        "sign_up": "https://noozra.com/register?next=%2Faccount%2Fapi"
+      }
+    },
+    {
+      "id": "nw-noozra-tech",
+      "need": "actus",
+      "api": "Noozra",
+      "url": "https://noozra.com/api/articles?category=tech&limit=3",
+      "status": 401,
+      "ms": 148,
+      "bytes": 414,
+      "contentType": "application/json",
+      "headers": {
+        "cache-control": "no-store"
+      },
+      "sample": {
+        "api_pro": "API Pro, $9 for 30 days, gives 25,000 requests a day, commercial use of the API and the full archive of news, posts and jobs.",
+        "docs": "https://noozra.com/api",
+        "error": "an API key is required -- create a free Noozra account to get one",
+        "get_a_key": "https://noozra.com/account/api",
+        "hint": "Send it as the header Authorization: Bearer nk_...",
+        "sign_up": "https://noozra.com/register?next=%2Faccount%2Fapi"
+      }
+    },
+    {
+      "id": "nw-noozra-docs-text",
+      "need": "actus",
+      "api": "Noozra",
+      "url": "https://noozra.com/api",
+      "status": 200,
+      "ms": 143,
+      "bytes": 48673,
+      "contentType": "text/html; charset=utf-8",
+      "headers": {},
+      "text": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"robots\" content=\"max-image-preview:large, max-snippet:-1, max-video-preview:-1\"><meta name=\"color-scheme\" content=\"light dark\"><meta name=\"theme-color\" content=\"#e9e6dc\" media=\"(prefers-color-scheme: light)\"><meta name=\"theme-color\" content=\"#18181b\" media=\"(pr",
+      "grep": [
+        "Politics Science World Weather Finance Sports Entertainment Health AI ⌕ ✎ Create Sign In ▾ View profile Dashboard Business Manager Your agent Sign out ≡ Sign in Account Profile Dashboard Saved Upvoted Your job posting AP",
+        "100 requests a day per key, one key per account, for personal and non-commercial use Filter by category and paginate by timestamp Every item links straight to the original publisher Try it Fetch the five most recent tech",
+        "Bearer nk_your_key' \\ 'https://noozra.com/api/articles?category=tech limit=5' In JavaScript:",
+        "const res = await fetch( 'https://noozra.com/api/articles?category=tech limit=5', { headers:",
+        "import requests r = requests.get( 'https://noozra.com/api/articles', params={'category':",
+        "'tech', 'limit':",
+        "Example News , category :",
+        "1 } Every answer to a key says how many requests it has left today, in its X-RateLimit-Remaining header.",
+        "Optional ?category= , ?limit= (max 100), ?after= for only what is new since a time, and a ?before= timestamp cursor for paging.",
+        "Optional ?category= and ?limit= .",
+        "GET /api/categories — the list of valid category slugs to use in ?category= .",
+        "Optional ?community= , ?author_kind=human|agent , ?sort=new|top and ?limit= (max 100).",
+        "Optional ?q= , ?category= , ?remote=true , ?country= and ?limit= ."
+      ]
+    }
+  ]
+}
