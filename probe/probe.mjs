@@ -6,37 +6,10 @@
 const UA = 'radar-bourse-tests/0.1 (+https://github.com/Dom-Owen/mon-server)';
 
 const TESTS = [
-  // Taux de change
-  { id: 'fx-frankfurter-v1', need: 'change', api: 'Frankfurter', url: 'https://api.frankfurter.dev/v1/latest?symbols=USD,GBP,JPY,CHF' },
-  { id: 'fx-frankfurter-v2', need: 'change', api: 'Frankfurter', url: 'https://api.frankfurter.dev/v2/rate/eur/usd' },
-  { id: 'fx-currencyapi-jsdelivr', need: 'change', api: 'Currency-api', url: 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.min.json', pick: ['date', 'eur.usd', 'eur.gbp', 'eur.jpy', 'eur.chf', 'eur.xaf'] },
-  { id: 'fx-currencyapi-pages', need: 'change', api: 'Currency-api', url: 'https://latest.currency-api.pages.dev/v1/currencies/eur.min.json', pick: ['date', 'eur.usd', 'eur.gbp'] },
-  { id: 'fx-vatcomply', need: 'change', api: 'VATComply', url: 'https://api.vatcomply.com/rates?base=EUR', pick: ['date', 'base', 'rates.USD', 'rates.GBP', 'rates.JPY', 'rates.CHF'] },
-
-  // Cours actions et ETF
-  { id: 'px-twelvedata-us-demo', need: 'cours', api: 'Twelve Data', url: 'https://api.twelvedata.com/quote?symbol=AAPL&apikey=demo' },
-  { id: 'px-twelvedata-paris-demo', need: 'cours', api: 'Twelve Data', url: 'https://api.twelvedata.com/quote?symbol=MC&exchange=Euronext&apikey=demo' },
-  { id: 'px-eodhd-us-demo', need: 'cours', api: 'EODHD', url: 'https://eodhd.com/api/eod/AAPL.US?api_token=demo&fmt=json&from=2026-11-01' },
-  { id: 'px-eodhd-paris-demo', need: 'cours', api: 'EODHD', url: 'https://eodhd.com/api/eod/MC.PA?api_token=demo&fmt=json&from=2026-11-01' },
-  { id: 'px-fmp-nokey', need: 'cours', api: 'Financial Modeling Prep', url: 'https://financialmodelingprep.com/stable/quote?symbol=AAPL' },
-  { id: 'px-fmp-demo', need: 'cours', api: 'Financial Modeling Prep', url: 'https://financialmodelingprep.com/stable/quote?symbol=AAPL&apikey=demo' },
-  { id: 'px-finnhub-nokey', need: 'cours', api: 'Finnhub', url: 'https://finnhub.io/api/v1/quote?symbol=AAPL' },
-  { id: 'px-alphavantage-demo', need: 'cours', api: 'Alpha Vantage', url: 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo' },
-
-  // Fondamentaux
-  { id: 'fd-sec-companyfacts', need: 'fondamentaux', api: 'SEC EDGAR', url: 'https://data.sec.gov/api/xbrl/companyfacts/CIK0000320193.json', pick: ['entityName', 'cik'] },
-  { id: 'fd-sec-tickers', need: 'fondamentaux', api: 'SEC EDGAR', url: 'https://www.sec.gov/files/company_tickers.json', pick: ['0', '1'] },
-  { id: 'fd-eodhd-demo', need: 'fondamentaux', api: 'EODHD', url: 'https://eodhd.com/api/fundamentals/AAPL.US?api_token=demo&fmt=json', pick: ['General.Name', 'General.Exchange', 'Highlights.PERatio', 'Highlights.ProfitMargin'] },
-  { id: 'fd-alphavantage-overview-demo', need: 'fondamentaux', api: 'Alpha Vantage', url: 'https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo', pick: ['Name', 'PERatio', 'ProfitMargin', 'Information', 'Note'] },
-  { id: 'fd-finnhub-nokey', need: 'fondamentaux', api: 'Finnhub', url: 'https://finnhub.io/api/v1/stock/metric?symbol=AAPL&metric=all' },
-
-  // Actualités
-  { id: 'nw-marketaux-nokey', need: 'actus', api: 'MarketAux', url: 'https://api.marketaux.com/v1/news/all?symbols=AAPL&language=en' },
-  { id: 'nw-gnews-nokey', need: 'actus', api: 'GNews', url: 'https://gnews.io/api/v4/search?q=LVMH&lang=fr' },
-  { id: 'nw-newsdata-nokey', need: 'actus', api: 'NewsData', url: 'https://newsdata.io/api/1/latest?q=LVMH&language=fr' },
-  { id: 'nw-finnhub-nokey', need: 'actus', api: 'Finnhub', url: 'https://finnhub.io/api/v1/company-news?symbol=AAPL&from=2026-11-01&to=2026-11-08' },
-  { id: 'nw-alphavantage-demo', need: 'actus', api: 'Alpha Vantage', url: 'https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&apikey=demo', pick: ['items', 'feed.0.title', 'feed.0.time_published', 'feed.0.source', 'Information'] },
-  { id: 'nw-noozra-docs', need: 'actus', api: 'Noozra', url: 'https://noozra.com/api', links: true },
+  // Tour 2 : Noozra (adresse d'appel trouvée dans sa page de documentation au tour 1)
+  { id: 'nw-noozra-articles', need: 'actus', api: 'Noozra', url: 'https://noozra.com/api/articles?limit=3' },
+  { id: 'nw-noozra-tech', need: 'actus', api: 'Noozra', url: 'https://noozra.com/api/articles?category=tech&limit=3' },
+  { id: 'nw-noozra-docs-text', need: 'actus', api: 'Noozra', url: 'https://noozra.com/api', grep: /(categor|rate|limit|licen|terms|attribut|language|lang)/i },
 ];
 
 function getPath(obj, path) {
@@ -77,6 +50,10 @@ async function run(t) {
       else res.sample = trim(json);
     } else {
       res.text = body.replace(/\s+/g, ' ').slice(0, 400);
+      if (t.grep) {
+        const plain = body.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ');
+        res.grep = plain.split(/(?<=[.!?:])\s+/).filter((x) => t.grep.test(x)).slice(0, 40).map((x) => x.slice(0, 220));
+      }
       if (t.links) res.links = [...new Set(body.match(/https?:\/\/[^"'<> ]*api[^"'<> ]*/gi) || [])].slice(0, 30);
     }
   } catch (e) {
